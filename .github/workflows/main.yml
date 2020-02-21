@@ -26,31 +26,7 @@ jobs:
         run: yarn install
         env:
           CI: true
-      - name: Run lint
-        run: npm run lint
-  build:
-    runs-on: ubuntu-latest
-    needs: [lint]
-    steps:
-      - name: Check out files from GitHub
-        uses: actions/checkout@v2
-      - name: Setting up Node.js
-        uses: actions/setup-node@v1
-        with:
-          node-version: 12.x
-      - name: Get yarn cache path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-      - name: Fetching Yarn cache
-        uses: actions/cache@v1
-        with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-      - name: Install dependencies
-        run: yarn install
-        env:
-          CI: true
-      - name: Run lint
-        run: npm run build
+      - name: Build translations
+        run: ./node_modules/.bin/gulp build-translations
+      - name: Running tslint 
+        run: ./node_modules/.bin/tslint 'src/**/*.ts' 'hassio/src/**/*.ts' 'gallery/src/**/*.ts' 'cast/src/**/*.ts' 'test-mocha/**/*.ts'
