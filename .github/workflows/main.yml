@@ -30,3 +30,4 @@ jobs:
         run: ./node_modules/.bin/gulp build-translations
       - name: Running tslint 
         run: ./node_modules/.bin/tslint 'src/**/*.ts' 'hassio/src/**/*.ts' 'gallery/src/**/*.ts' 'cast/src/**/*.ts' 'test-mocha/**/*.ts'
+ 
